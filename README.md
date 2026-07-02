@@ -28,41 +28,51 @@ These problems are specifically designed to:
 | 4 | [Unsafe, FFI & Advanced Patterns](problems/061-080_unsafe_ffi_patterns/) | 061–080 | Raw pointers, transmute, repr, UB, aliasing, drop order |
 | 5 | [Macros, Compiler Internals & Edge Cases](problems/081-100_macros_compiler_edge_cases/) | 081–100 | proc macros, macro_rules tricks, type inference, autoref |
 
-## 📋 Problem Format
+## 📁 Repository Structure
 
-Each problem is a standalone Markdown file containing:
+Problems and solutions are kept in **separate parallel directories** so you can present problems to an LLM without leaking answers:
 
 ```
-## Problem Title
-**Difficulty:** ⭐⭐⭐⭐
-**Category:** Category Name
-**Tags:** `tag1`, `tag2`, `tag3`
+quiz-rust/
+├── problems/                              # Questions only (no answers)
+│   ├── 001-020_ownership_borrowing_lifetimes/
+│   │   ├── problem_001.md  …  problem_020.md
+│   ├── 021-040_type_system_generics/
+│   ├── 041-060_concurrency_async/
+│   ├── 061-080_unsafe_ffi_patterns/
+│   └── 081-100_macros_compiler_edge_cases/
+│
+└── solutions/                             # Answers + explanations
+    ├── 001-020_ownership_borrowing_lifetimes/
+    │   ├── solution_001.md  …  solution_020.md
+    ├── 021-040_type_system_generics/
+    ├── 041-060_concurrency_async/
+    ├── 061-080_unsafe_ffi_patterns/
+    └── 081-100_macros_compiler_edge_cases/
+```
 
-### Problem Statement
-Description of the problem with code snippet.
+## 📋 File Format
 
-### Question
-What does this code do? / Does this compile? / What is the output?
+**Problem files** (`problems/*/problem_NNN.md`):
+```
+# Problem NNN: Title
+**Difficulty / Category / Tags**
+## Problem Statement  (code snippet)
+## Question
+## Options  (A–D, multiple choice)
+```
 
-### Options (if multiple choice)
-- A) ...
-- B) ...
-- C) ...
-- D) ...
-
-### Answer
-The correct answer with detailed explanation.
-
-### Common LLM Mistakes
-Known failure modes and why LLMs get this wrong.
-
-### Key Concepts
-Bullet points of the Rust concepts being tested.
+**Solution files** (`solutions/*/solution_NNN.md`):
+```
+# Problem NNN: Title — Solution
+## Answer  (correct option + detailed explanation)
+## Common LLM Mistakes  (known failure modes)
+## Key Concepts  (Rust concepts tested)
 ```
 
 ## 🚀 Quick Start
 
-Browse the [problem index](#problem-index) below, or dive into a category folder.
+Browse the [problem index](#problem-index) below, or dive into a category folder. Solutions are in the matching `solutions/` subdirectory.
 
 ---
 
