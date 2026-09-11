@@ -1,37 +1,40 @@
-# Problem 041: The Send Bound Surprise with Rc
+# Problem 041: Why &Cell Is !Send, Yet Mutex<Cell> Is Sync
 
-**Difficulty:** ⭐⭐⭐  
+**Difficulty:** ⭐⭐⭐⭐⭐  
 **Category:** Concurrency & Async  
-**Tags:** `Send`, `Rc`, `Arc`, `thread::spawn`
+**Tags:** `Send`, `Sync`, `Cell`, `Mutex`, `auto-traits`, `shared-references`
 
 ## Problem Statement
 
-A developer wants to share data across threads. Consider the following code:
+A developer is mapping the `Send` / `Sync` lattice for interior mutability and mutexes. Consider these helper bounds and four call sites:
 
 ```rust
+use std::cell::Cell;
 use std::rc::Rc;
-use std::thread;
+use std::sync::Mutex;
+
+fn require_send<T: Send>(_: T) {}
+fn require_sync<T: Sync>(_: T) {}
 
 fn main() {
-    let data = Rc::new(vec![1, 2, 3]);
-    let data_clone = Rc::clone(&data);
+    let cell = Cell::new(0i32);
+    require_send(cell);                       // Line A
 
-    let handle = thread::spawn(move || {
-        println!("{:?}", data_clone);
-    });
+    let cell = Cell::new(0i32);
+    require_send(&cell);                      // Line B
 
-    println!("{:?}", data);
-    handle.join().unwrap();
+    require_sync(Mutex::new(Cell::new(0i32))); // Line C
+    require_sync(Mutex::new(Rc::new(0i32)));   // Line D
 }
 ```
 
 ## Question
 
-What happens when you try to compile this code?
+Which lines fail to compile?
 
 ## Options
 
-- A) It compiles and prints `[1, 2, 3]` twice
-- B) Compilation error: `Rc<Vec<i32>>` cannot be sent between threads safely because it doesn't implement `Send`
-- C) Compilation error: `data` is moved into the closure and cannot be used afterward
-- D) It compiles but panics at runtime due to a data race on the reference count
+- A) Lines B and D
+- B) Lines B, C, and D (`Mutex<T>: Sync` requires `T: Sync`, so wrapping `Cell` cannot help)
+- C) Lines A, B, and D (`Cell<T>` is never `Send`, same as `Rc<T>`)
+- D) Only Line D (`&Cell<i32>` is `Send` because `Cell<i32>` is `Send`)

@@ -134,7 +134,7 @@ Browse the [problem index](#problem-index) below, or dive into a category folder
 
 | # | Problem | Difficulty |
 |---|---------|------------|
-| 041 | [The Send Bound Surprise with Rc](problems/041-060_concurrency_async/problem_041.md) | ⭐⭐⭐ |
+| 041 | [Why &Cell Is !Send, Yet Mutex<Cell> Is Sync](problems/041-060_concurrency_async/problem_041.md) | ⭐⭐⭐⭐⭐ |
 | 042 | [When Does a Type Lose Send?](problems/041-060_concurrency_async/problem_042.md) | ⭐⭐⭐⭐ |
 | 043 | [Sync Does Not Imply Send](problems/041-060_concurrency_async/problem_043.md) | ⭐⭐⭐⭐ |
 | 044 | [Pinning and Moving — The Fundamental Contract](problems/041-060_concurrency_async/problem_044.md) | ⭐⭐⭐⭐ |
